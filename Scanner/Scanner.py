@@ -11,7 +11,7 @@ def find_token(text):
     #text, string_dict = extract_string_literals(text)
     text = spacify(text)
 
-    line_list = text.lower().split('\n')
+    line_list = text.split('\n')
 
     block_name = ""
     comment = ""
@@ -39,13 +39,6 @@ def find_token(text):
                 Tokens.append(token(string, token_type.String))
                 ind = j + 1
                 continue
-            # Check for block name
-            if t == "predicates":
-                block_name = "predicates"
-            elif t == "clauses":
-                block_name = "clauses"
-            elif t == "goals":
-                block_name = "goals"
 
             # Check for reserved words
             if t in reserved_words:

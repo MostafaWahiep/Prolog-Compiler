@@ -33,7 +33,7 @@ def Scan():
     dTDaPT = pt.Table(dTDa1, dataframe=df, showtoolbar=True, showstatusbar=True)
     dTDaPT.show()
     # start Parsing
-    Node=Parse(Tokens)
+    Node, errors = Parse(Tokens)
     
     # to display errorlist
     #errors.clear()
