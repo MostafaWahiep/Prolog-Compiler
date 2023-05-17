@@ -1,10 +1,9 @@
-
 from nltk.tree import *
-from Scanner.classes import token_type, token
-
+from Scanner.classes import token_type
+from Parser.utils import *
 
 def Predicates(j, Tokens):
-    # Predicates → Predicate  | ε
+    # Predicates → Predicate  Statements
     output = dict()
     children=[]
     predicates = Match(token_type.Predicate, j, Tokens)
@@ -125,21 +124,3 @@ def Parametertail(j, Tokens):
         return output
     
 
-def Match(a,j, Tokens):
-    output=dict()
-    if(j<len(Tokens)):
-        Temp=Tokens[j].to_dict()
-        if(Temp['token_type']==a):
-            j+=1
-            output["node"]=[Temp['Lex']]
-            output["index"]=j
-            return output
-        else:
-            output["node"]=["error"]
-            output["index"]=j+1
-            #errors.append("Syntax error : "+Temp['Lex']+" Expected dot")
-            return output
-    else:
-        output["node"]=["error"]
-        output["index"]=j+1
-        return output
