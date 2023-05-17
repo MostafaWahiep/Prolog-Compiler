@@ -13,7 +13,6 @@ def find_token(text):
 
     line_list = text.split('\n')
 
-    block_name = ""
     comment = ""
     string = ""
 
