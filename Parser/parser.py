@@ -1,6 +1,7 @@
 from nltk.tree import *
 from Scanner.Scanner import *
 from Parser.predicates import Predicates
+from Parser.goals import Goal
 
 errors = []
 
@@ -18,7 +19,8 @@ def Parse(Tokens):
     '''
     Clauses_dict=Clauses(Predicates_dict["index"], Tokens)
     Children.append(Clauses_dict["node"])
-    Goal_dict = Goal(Clauses_dict["index"], Tokens)
+    '''
+    Goal_dict = Goal(Predicates_dict["index"], Tokens)
     Children.append(Goal_dict["node"])
     if(Goal_dict["index"] != len(Tokens)):
         error = dict()
@@ -26,6 +28,6 @@ def Parse(Tokens):
         error["index"]=Goal_dict["index"]
         Children.append(error["node"])
         errors.append("Logic error : more than one Goal in Goals section")
-    '''
+    
     Node=Tree('Program',Children)
     return Node, errors
