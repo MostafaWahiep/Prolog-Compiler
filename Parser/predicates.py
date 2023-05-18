@@ -10,7 +10,7 @@ def Predicates(j, Tokens):
     children.append(predicates["node"])
     statements = Statements(predicates["index"], Tokens)
     children.append(statements["node"])
-    Node=Tree('Predicates',children)
+    Node=Tree('Predicate section',children)
     output["node"]=Node
     output["index"]=statements["index"]
     return output
