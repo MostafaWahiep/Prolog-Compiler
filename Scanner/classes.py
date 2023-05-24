@@ -1,7 +1,7 @@
 from enum import Enum
 
 
-#prolog valid tokens
+# prolog valid tokens
 class token_type(Enum):
     # Predicates, clauses, and goals
     Predicate = 1
@@ -16,7 +16,7 @@ class token_type(Enum):
     String = 8  # "ahjgj"
     Anonymous = 9  # _
     variable_name = 10
-    data_type = 11  #integer , char , string , symbol , real
+    data_type = 11  # integer , char , string , symbol , real
 
     # Comparison operators
     equal = 12
@@ -40,7 +40,7 @@ class token_type(Enum):
     readchar = 26
 
     # Punctuation
-    double_quote = 27  # single quote
+    double_quote = 27  # single quote"
     colon_dash = 28  # :-
     dot = 29
     open_paren = 30
