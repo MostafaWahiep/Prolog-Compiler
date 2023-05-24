@@ -8,7 +8,7 @@ def find_token(text):
     text, comments = extract_comments(text)
     for comment in comments:
         Tokens.append(token(comment, token_type.Comment))
-    #text, string_dict = extract_string_literals(text)
+    # text, string_dict = extract_string_literals(text)
     text = spacify(text)
 
     line_list = text.split('\n')
@@ -45,15 +45,15 @@ def find_token(text):
             elif t in reserved_operators:
                 Tokens.append(token(t, reserved_operators[t]))
 
-            #check for variables and data values
+            # check for variables and data values
             elif re.match(r'^[A-Z_][a-zA-Z0-9_]*$', t):
                 Tokens.append(token(t, token_type.variable_name))
             elif re.match(r'^[0-9]+$', t):
                 Tokens.append(token(t, token_type.Integer))
             elif re.match(r'^[0-9]+\.[0-9]+$', t):
                 Tokens.append(token(t, token_type.Real))
-            #elif re.match(r'^\".*\"$', t):
-            #Tokens.append(token(string_dict[t[1:-1]], token_type.String))
+            # elif re.match(r'^\".*\"$', t):
+            # Tokens.append(token(string_dict[t[1:-1]], token_type.String))
             elif re.match(r'^\'.\'$', t):
                 Tokens.append(token(t, token_type.Char))
             elif re.match(r'^[a-z][a-zA-Z0-9_]*$', t):
