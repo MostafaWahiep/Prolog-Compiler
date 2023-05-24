@@ -130,6 +130,6 @@ def Term(j, Tokens):
 def error(j, error_message):
     error = dict()
     error["node"]=["error"]
-    error["index"]= j
+    error["index"]= j+1
     errors.append(error_message)
     return error
