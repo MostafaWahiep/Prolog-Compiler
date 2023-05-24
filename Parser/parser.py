@@ -2,12 +2,14 @@ from nltk.tree import *
 from Scanner.Scanner import *
 from Parser.predicates import Predicates
 from Parser.goals import Goal
+from Parser.clasues import Clauses
 
 errors = []
 
 def Parse(Tokens):
     j=0
     Children=[]
+
     # remove comments
     Tokens = [t for t in Tokens if 
               (t.to_dict()['token_type'] != token_type.Comment or
@@ -16,11 +18,10 @@ def Parse(Tokens):
     
     Predicates_dict=Predicates(j, Tokens)
     Children.append(Predicates_dict["node"])
-    '''
+
     Clauses_dict=Clauses(Predicates_dict["index"], Tokens)
-    Children.append(Clauses_dict["node"])
-    '''
-    Goal_dict = Goal(Predicates_dict["index"], Tokens)
+    Children.append(Clauses_dict["node"])    
+    Goal_dict = Goal(Clauses_dict["index"], Tokens)
     Children.append(Goal_dict["node"])
     if(Goal_dict["index"] != len(Tokens)):
         error = dict()

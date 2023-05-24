@@ -60,6 +60,8 @@ def find_token(text):
                 Tokens.append(token(t, token_type.Name))
             elif re.match(r'^_$', t):
                 Tokens.append(token(t, token_type.Anonymous))
+            elif re.match(r'^!$', t):
+                Tokens.append(token(t, token_type.Name))
             else:
                 Tokens.append(token(t, token_type.Error))
             ind += 1

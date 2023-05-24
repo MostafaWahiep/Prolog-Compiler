@@ -14,7 +14,7 @@ def Match(a,j, Tokens):
             return output
         else:
             output["node"]=["error"]
-            output["index"]=j
+            output["index"]=j+1
             errors.append("Syntax error : "+Temp['Lex']+" Expected dot")
             return output
     else:

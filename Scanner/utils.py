@@ -42,7 +42,7 @@ def spacify(text):
     for match in matches:
         text = text.replace(f'"{match}"', f' "{match}" ')
 
-    lst = ["+", ":-", ".", "(", ")", ",", ";", "%"]
+    lst = ["+", ":-", ".", "(", ")", ",", ";", "%", "*", "/", "="]
     for i in lst:
         text = text.replace(f'{i}', f' {i} ')
     return text
