@@ -32,7 +32,7 @@ def find_element_index(lst, element):
     return index
 
 
-def spacify(text):
+def spacing(text):
     # The regular expression pattern matches any string that starts and ends with double quotes
     # and may contain escaped characters inside the quotes.
     matches = re.findall(r'/\*.*\*/', text)
@@ -53,6 +53,3 @@ def spacify(text):
     for i in lst:
         text = text.replace(f'{i}', f' {i} ')
     return text
-
-
-print(spacify("action(1,Num1,Num2,Result):-Result=Num1-Num2,!."))
