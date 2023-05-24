@@ -2,7 +2,6 @@ from enum import Enum
 import re
 
 
-
 def extract_string_literals(code_text):
     string_literals = re.findall(r'\"(.*?)\"', code_text)
     strings_dict = {}
@@ -36,13 +35,24 @@ def find_element_index(lst, element):
 def spacify(text):
     # The regular expression pattern matches any string that starts and ends with double quotes
     # and may contain escaped characters inside the quotes.
-    matches = re.findall(
-        r'/\*.*?\*/|\".*?\"|<=|>=|<>|<>|=|<|>|[^:]-|\/[^\*]|[^\*]\/', text)
-    # Find all matches of the regular expression pattern in the text.
+    matches = re.findall(r'/\*.*\*/', text)
     for match in matches:
-        text = text.replace(f'"{match}"', f' "{match}" ')
+        text = text.replace(f'{match}', f' ')
+    # Find all matches of the regular expression pattern in the text.
+    matches = re.findall(r'<|>|=|:|-', text)
+    matches = set(matches)
+    for match in matches:
+        text = text.replace(f'{match}', f' {match} ')
 
-    lst = ["+", ":-", ".", "(", ")", ",", ";", "%", "*", "/", "="]
+    text = re.sub(":\s\s-", ":-", text)
+    text = re.sub("<\s\s>", "<>", text)
+    text = re.sub("<\s\s=", "<=", text)
+    text = re.sub(">\s\s=", ">=", text)
+
+    lst = ["+", ":-", ".", "(", ")", ",", ";", "%", "/", "*"]
     for i in lst:
         text = text.replace(f'{i}', f' {i} ')
     return text
+
+
+print(spacify("action(1,Num1,Num2,Result):-Result=Num1-Num2,!."))
