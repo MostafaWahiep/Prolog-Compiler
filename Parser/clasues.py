@@ -4,7 +4,7 @@ from Parser.utils import *
 from Parser.body import Body
 
 def Clauses(j, Tokens):
-    # Clauses → Fact State2 | Rule State2
+    # Clauses → clauses Fact State2 | clauses Rule State2
     output = dict()
     children=[]
     clauses = Match(token_type.Clause, j, Tokens)
@@ -203,7 +203,7 @@ def Terms(j, Tokens):
         return output
 
 def Term(j, Tokens):
-    # Terms → , value term | , variable term | , - term | ε
+    # Term → , value term | , variable term | , - term | ε
     output = dict()
     children=[]
     if(Tokens[j].to_dict()['token_type']==token_type.comma):
