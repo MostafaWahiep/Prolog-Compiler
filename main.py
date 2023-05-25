@@ -1,57 +1,71 @@
 import tkinter as tk
+import pandas as pd
 import pandastable as pt
-import pandas
 from Scanner.Scanner import *
 from Parser.parser import *
 from nltk.tree import *
 
-root= tk.Tk()
 
-canvas1 = tk.Canvas(root, width=400, height=300, relief='raised')
-canvas1.pack()
+root = tk.Tk()
+canvas1 = tk.Canvas(root, width=800, height=600)
+root.title('Prolog Parser')
 
-label1 = tk.Label(root, text='Scanner Phase')
-label1.config(font=('helvetica', 14))
-canvas1.create_window(200, 25, window=label1)
-
-label2 = tk.Label(root, text='Source code:')
-label2.config(font=('helvetica', 10))
-canvas1.create_window(200, 100, window=label2)
-
-entry1 = tk.Entry(root) 
-canvas1.create_window(200, 140, window=entry1)
 
 def Scan():
-    x1 = entry1.get()
-    Tokens = find_token(x1)
-    df=pandas.DataFrame.from_records([t.to_dict() for t in Tokens])
-    #print(df)
-      
-    #to display token stream as table
-    dTDa1 = tk.Toplevel()
-    dTDa1.title('Token Stream')
-    dTDaPT = pt.Table(dTDa1, dataframe=df, showtoolbar=True, showstatusbar=True)
-    dTDaPT.show()
-    # start Parsing
-    Node, errors = Parse(Tokens)
+    x1 = entry1.get('1.0', 'end-1c')
+    tokens = find_tokens(x1)
+    arr = [t.to_dict() for t in tokens]
+    frame = tk.Frame(root)
+    frame.pack(fill='both', expand=True)
+    df = pd.DataFrame.from_records([t.to_dict() for t in tokens])
+    table = pt.Table(frame, dataframe=df, showtoolbar=True, showstatusbar=True)
+    table.show()
+    canvas1.update_idletasks()
+    canvas1.config(scrollregion=canvas1.bbox('all'))
+
+    # Perform parsing
+    node, errors = parse(tokens)
     
-    # to display errorlist
-    #errors.clear()
-    df1=pandas.DataFrame(errors)
-    dTDa2 = tk.Toplevel()
-    dTDa2.title('Error List')
-    dTDaPT2 = pt.Table(dTDa2, dataframe=df1, showtoolbar=True, showstatusbar=True)
-    dTDaPT2.show()
-    Node.draw()
-    #clear your list
+    # Create a DataFrame from parsing errors
+    error_df = pd.DataFrame(errors)
     
-    #label3 = tk.Label(root, text='Lexem ' + x1 + ' is:', font=('helvetica', 10))
-    #canvas1.create_window(200, 210, window=label3)
+    # Display error list as a table in a new window
+    error_list_window = tk.Toplevel()
+    error_list_window.title('Error List')
+    error_list_table = pt.Table(error_list_window, dataframe=error_df, showtoolbar=True, showstatusbar=True)
+    error_list_table.show()
     
-    #label4 = tk.Label(root, text="Token_type"+x1, font=('helvetica', 10, 'bold'))
-    #canvas1.create_window(200, 230, window=label4)
-    
-    
-button1 = tk.Button(text='Scan', command=Scan, bg='brown', fg='white', font=('helvetica', 9, 'bold'))
-canvas1.create_window(200, 180, window=button1)
+    # Draw the parse tree
+    node.draw()
+
+canvas1.pack(side='left', fill='both', expand=True)
+scrollbar = tk.Scrollbar(root, command=canvas1.yview)
+scrollbar.pack(side='right', fill='y')
+canvas1.config(yscrollcommand=scrollbar.set)
+
+
+frame = tk.Frame(canvas1)
+canvas1.create_window((0, 0), window=frame, anchor='nw')
+
+
+label1 = tk.Label(frame, text='Scanner Phase')
+label1.config(font=('helvetica', 14))
+
+label2 = tk.Label(frame, text='Source code:')
+label2.config(font=('helvetica', 10))
+entry1 = tk.Text(frame, width=100, height=30)
+
+label1.pack()
+label2.pack()
+entry1.pack()
+button1 = tk.Button(frame,
+                    text='Scan',
+                    command=Scan,
+                    bg='brown',
+                    fg='white',
+                    font=('helvetica', 9, 'bold'))
+button1.pack()
+
+frame.update_idletasks()
+canvas1.config(scrollregion=canvas1.bbox('all'))
 root.mainloop()

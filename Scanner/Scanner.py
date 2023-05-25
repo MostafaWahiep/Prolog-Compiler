@@ -3,7 +3,7 @@ from Scanner.utils import *
 from Scanner.classes import *
 
 
-def find_token(text):
+def find_tokens(text):
     Tokens = []
     text, comments = extract_comments(text)
     for comment in comments:

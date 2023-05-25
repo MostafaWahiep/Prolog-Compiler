@@ -6,7 +6,7 @@ from Parser.clasues import Clauses
 
 errors = []
 
-def Parse(Tokens):
+def parse(Tokens):
     # Program → Predicates Clauses Goal
     j=0
     Children=[]
