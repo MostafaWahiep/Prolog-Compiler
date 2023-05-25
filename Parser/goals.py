@@ -25,7 +25,7 @@ def Statement(j, Tokens):
     name = Match(token_type.Name, j, Tokens)
     children.append(name["node"])
     if(name["index"] >= len(Tokens)):
-        errors.append("Syntax error : "+Tokens[j].to_dict()['Lex']+", Expected (")
+        errors.append("Syntax error : "+Tokens[j].to_dict()['Lex']+", Expected ( or .")
         Node=Tree('Statement',children)
         output["node"]=Node
         output["index"]=name["index"]

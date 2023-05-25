@@ -3,8 +3,7 @@ from Scanner.Scanner import *
 from Parser.predicates import Predicates
 from Parser.goals import Goal
 from Parser.clasues import Clauses
-
-errors = []
+from Parser.utils import errors
 
 def parse(Tokens):
     # Program → Predicates Clauses Goal
@@ -13,8 +12,8 @@ def parse(Tokens):
 
     # remove comments
     Tokens = [t for t in Tokens if 
-              (t.to_dict()['token_type'] != token_type.Comment or
-                t.to_dict()['token_type'] != token_type.line_comment or
+              (t.to_dict()['token_type'] != token_type.Comment and
+                t.to_dict()['token_type'] != token_type.line_comment and
                 t.to_dict()['token_type'] != token_type.mline_comment)]
     
     Predicates_dict=Predicates(j, Tokens)
@@ -24,7 +23,7 @@ def parse(Tokens):
     Children.append(Clauses_dict["node"])    
     Goal_dict = Goal(Clauses_dict["index"], Tokens)
     Children.append(Goal_dict["node"])
-    if(Goal_dict["index"] != len(Tokens)):
+    if(Goal_dict["index"] < len(Tokens)):
         error = dict()
         error["node"]=["error"]
         error["index"]=Goal_dict["index"]

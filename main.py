@@ -48,7 +48,7 @@ frame = tk.Frame(canvas1)
 canvas1.create_window((0, 0), window=frame, anchor='nw')
 
 
-label1 = tk.Label(frame, text='Scanner Phase')
+label1 = tk.Label(frame, text='Ultimate Prolog Parser')
 label1.config(font=('helvetica', 14))
 
 label2 = tk.Label(frame, text='Source code:')
